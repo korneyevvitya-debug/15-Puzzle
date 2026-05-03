@@ -1,0 +1,10 @@
+C:\Users\Сергей\source\repos\chisla\bin\Debug\chisla.exe.config
+C:\Users\Сергей\source\repos\chisla\bin\Debug\chisla.exe
+C:\Users\Сергей\source\repos\chisla\bin\Debug\chisla.pdb
+C:\Users\Сергей\source\repos\chisla\obj\Debug\chisla.csproj.AssemblyReference.cache
+C:\Users\Сергей\source\repos\chisla\obj\Debug\chisla.Properties.Resources.resources
+C:\Users\Сергей\source\repos\chisla\obj\Debug\chisla.csproj.GenerateResource.cache
+C:\Users\Сергей\source\repos\chisla\obj\Debug\chisla.csproj.CoreCompileInputs.cache
+C:\Users\Сергей\source\repos\chisla\obj\Debug\chisla.exe
+C:\Users\Сергей\source\repos\chisla\obj\Debug\chisla.pdb
+C:\Users\Сергей\source\repos\chisla\obj\Debug\chisla.exe.config
