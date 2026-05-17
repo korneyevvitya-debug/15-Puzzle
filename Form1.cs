@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -36,15 +37,16 @@ namespace chisla
                         Padding = new Padding(0),
                         Font = new Font("Neuland", 30, FontStyle.Bold),
                         ForeColor = Color.Black,
-                        BackColor = Color.DarkGoldenrod,
+                        BackgroundImageLayout = ImageLayout.Stretch,
                         Tag = new Point(i, j),
                         FlatStyle = FlatStyle.Flat,
                         UseVisualStyleBackColor = false,
-                        TextAlign = ContentAlignment.MiddleCenter
+                        TextAlign = ContentAlignment.MiddleCenter,
+
+
                     };
 
-                    buttons[i, j].FlatAppearance.BorderSize = 2;
-                    buttons[i, j].FlatAppearance.BorderColor = Color.DarkGoldenrod;
+                    buttons[i, j].FlatAppearance.BorderSize = 0;
                     buttons[i, j].Click += Button_Click;
                     gamePanel.Controls.Add(buttons[i, j], j, i);
                 }
@@ -54,42 +56,46 @@ namespace chisla
 
         private void StartNewGame()
         {
-            int number = 1;
+            //int number = 1;
+            int[] numbers = (new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
+            numbers = numbers.OrderBy(x => random.Next()).ToArray();           //Случайная перестановка массива чисел от 1 до 15
+            int disorders = 0;                                                  // Проверка на разрешимость
+            for (int i = 1; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (numbers[j] > i)
+                        disorders++;
+                    else if (numbers[j] == i)
+                        break;
+                }
+            }
+            if (disorders % 2 == 1)                                               // Исправление неразрешимости, если такая есть
+                (numbers[13], numbers[14]) = (numbers[14], numbers[13]);
+
+
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
+                    buttons[i, j].FlatAppearance.MouseOverBackColor = Color.Transparent;
                     if (i == 3 && j == 3)
                     {
                         buttons[i, j].Text = "";
+                        buttons[i, j].BackgroundImage = null;
+                        buttons[i, j].BackColor = Color.Transparent;
                     }
                     else
                     {
-                        buttons[i, j].Text = number.ToString();
-                        number++;
+                        buttons[i, j].BackgroundImage = Image.FromFile(@"..\..\Assets\woodtexture.png");
+                        buttons[i, j].Text = numbers[i * 4 + j].ToString();
                     }
                 }
             }
             emptyRow = 3;
             emptyCol = 3;
-            ShuffleButtons();
             moveCounter = 0;
             UpdateMoves();
-        }
-
-        private void ShuffleButtons()
-        {
-            for (int i = 0; i < 1000; i++)
-            {
-                var possibleMoves = GetPossibleMoves(emptyRow, emptyCol);
-                if (possibleMoves.Count > 0)
-                {
-                    var move = possibleMoves[random.Next(possibleMoves.Count)];
-                    SwapButtons(move.X, move.Y, emptyRow, emptyCol);
-                    emptyRow = move.X;
-                    emptyCol = move.Y;
-                }
-            }
         }
 
         private List<Point> GetPossibleMoves(int row, int col)
@@ -116,6 +122,9 @@ namespace chisla
             string tempText = buttons[row1, col1].Text;
             buttons[row1, col1].Text = buttons[row2, col2].Text;
             buttons[row2, col2].Text = tempText;
+
+            buttons[row1, col1].BackgroundImage = null;
+            buttons[row2, col2].BackgroundImage = Image.FromFile(@"..\..\Assets\woodtexture.png");
         }
 
         private void Button_Click(object sender, EventArgs e)
@@ -127,6 +136,7 @@ namespace chisla
             if (IsNearby(row, col, emptyRow, emptyCol))
             {
                 SwapButtons(row, col, emptyRow, emptyCol);
+
 
                 emptyRow = row;
                 emptyCol = col;
@@ -228,7 +238,7 @@ namespace chisla
 
         private void CookieButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("🍪 Thanks for playing!", "Cookie!",
+            MessageBox.Show("\uD83C\uDF6A Thanks for playing!", "Cookie!",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.DialogResult = DialogResult.OK;
             this.Close();

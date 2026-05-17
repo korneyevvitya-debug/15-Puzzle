@@ -22,12 +22,16 @@ namespace chisla
 
         private void InitializeComponent()
         {
+
+            this.BackgroundImage = Image.FromFile(@"..\..\Assets\bgimage.png");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             this.gamePanel = new TableLayoutPanel();
             this.newGameButton = new Button();
             this.movesLabel = new Label();
 
             this.gamePanel.Size = new Size(360, 360);
             this.gamePanel.Location = new Point(12, 40);
+            this.gamePanel.BackColor = Color.Transparent;
 
             this.gamePanel.RowCount = 4;
             this.gamePanel.ColumnCount = 4;
@@ -71,5 +75,3 @@ namespace chisla
         }
     }
 }
-
-
